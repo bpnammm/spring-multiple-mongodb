@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("")
 class Controller {
 
-    final String DESTINATION_NAME = "masoffer.test-message"
+    final String DESTINATION_NAME_01 = "masoffer.test-message-01"
+    final String DESTINATION_NAME_02 = "masoffer.test-message-02"
 
     @Autowired
     @Qualifier(value = "primaryMongoTemplate")
@@ -37,11 +38,13 @@ class Controller {
 
     @PostMapping("/message")
     String enqueueMessage(@RequestBody String message) {
-        return jmsTemplate.convertAndSend(DESTINATION_NAME, message)
+        jmsTemplate.convertAndSend(DESTINATION_NAME_01, message)
+        jmsTemplate.convertAndSend(DESTINATION_NAME_02, message)
+        return "Success!"
     }
 
     @GetMapping("/message")
     String dequeueMessage() {
-        return jmsTemplate.receiveAndConvert(DESTINATION_NAME)
+        return jmsTemplate.receiveAndConvert(DESTINATION_NAME_01)
     }
 }
