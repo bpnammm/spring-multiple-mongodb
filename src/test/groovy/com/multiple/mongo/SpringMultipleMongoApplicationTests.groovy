@@ -1,4 +1,4 @@
-package com.spring.multiple.mongo.datasource.springmultiplemongo
+package com.multiple.mongo
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

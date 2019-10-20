@@ -1,4 +1,4 @@
-package com.spring.multiple.mongo.datasource.springmultiplemongo.config
+package com.multiple.mongo.config
 
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer
 import org.springframework.context.annotation.Bean

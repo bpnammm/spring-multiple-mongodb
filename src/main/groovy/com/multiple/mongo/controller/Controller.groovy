@@ -1,4 +1,4 @@
-package com.spring.multiple.mongo.datasource.springmultiplemongo.controller
+package com.multiple.mongo.controller
 
 import org.bson.Document
 import org.springframework.beans.factory.annotation.Autowired

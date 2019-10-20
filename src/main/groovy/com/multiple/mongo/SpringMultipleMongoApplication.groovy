@@ -1,4 +1,4 @@
-package com.spring.multiple.mongo.datasource.springmultiplemongo
+package com.multiple.mongo
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
