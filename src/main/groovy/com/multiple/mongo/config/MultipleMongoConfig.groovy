@@ -1,7 +1,9 @@
 package com.multiple.mongo.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.mongo.MongoProperties
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -10,45 +12,27 @@ import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory
 
 @Configuration
+@EnableConfigurationProperties
 class MultipleMongoConfig {
 
     @Primary
-    @Bean(name = "primary")
-    @ConfigurationProperties(prefix = "mongodb.db01")
-    MongoProperties getPrimaryProperties() {
-        return new MongoProperties()
-    }
-
-    @Primary
     @Bean(name = "primaryMongoTemplate")
-    MongoTemplate getPrimaryMongoTemplate() {
-        return this.getMongoTemplateByProperties(getPrimaryProperties())
-    }
-
-    @Bean(name = "secondary")
-    @ConfigurationProperties(prefix = "mongodb.db02")
-    MongoProperties getSecondaryProperties() {
-        return new MongoProperties()
+    MongoTemplate getPrimaryMongoTemplate(@Value('${mongodb.db01.uri}') String uri) {
+        return this.getMongoTemplateByProperties(uri)
     }
 
     @Bean(name = "secondaryMongoTemplate")
-    MongoTemplate getSecondaryMongoTemplate() {
-        return this.getMongoTemplateByProperties(getSecondaryProperties())
-    }
-
-    @Bean(name = "third")
-    @ConfigurationProperties(prefix = "mongodb.db03")
-    MongoProperties getThirdProperties() {
-        return new MongoProperties()
+    MongoTemplate getSecondaryMongoTemplate(@Value('${mongodb.db02.uri}') String uri) {
+        return this.getMongoTemplateByProperties(uri)
     }
 
     @Bean(name = "thirdMongoTemplate")
-    MongoTemplate getThirdMongoTemplate() {
-        return this.getMongoTemplateByProperties(getThirdProperties())
+    MongoTemplate getThirdMongoTemplate(@Value('${mongodb.db03.uri}') String uri) {
+        return this.getMongoTemplateByProperties(uri)
     }
 
-    MongoTemplate getMongoTemplateByProperties(MongoProperties mongoProperties) {
-        MongoDbFactory mongoDbFactory = new SimpleMongoClientDbFactory(mongoProperties.getUri())
+    MongoTemplate getMongoTemplateByProperties(String uri) {
+        MongoDbFactory mongoDbFactory = new SimpleMongoClientDbFactory(uri)
         return new MongoTemplate(mongoDbFactory)
     }
 }
